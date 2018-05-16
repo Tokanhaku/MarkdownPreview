@@ -25,6 +25,13 @@ from .markdown_wrapper import StMarkdown as Markdown
 import subprocess as sp
 my_env = os.environ.copy()
 my_env["PATH"] = "/usr/local/bin:" + my_env["PATH"]
+
+def replaceuser(path):
+    homepath = os.path.expanduser("~")
+    if path[:len(homepath)] == homepath:
+        path = "~"+path[len(homepath):]
+    return path
+
 #############################
 
 
@@ -1081,7 +1088,7 @@ class MarkdownBuildCommand(sublime_plugin.WindowCommand):
         save_utf8(htmlfile, content)
 
         # LaunchBar Notification
-        my_command = ["osascript", os.path.expanduser("~/Library/Application Support/Sublime Text 3/Packages/MarkdownPreview/notification.scpt"), htmlfile]
+        my_command = ["osascript", os.path.expanduser("~/Library/Application Support/Sublime Text 3/Packages/MarkdownPreview/notification.scpt"), "🖋 New HTML File!", replaceuser(htmlfile)]
         sp.check_output(my_command, env=my_env)
         #############################
 
