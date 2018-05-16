@@ -21,6 +21,13 @@ from . import desktop
 from .markdown_settings import Settings
 from .markdown_wrapper import StMarkdown as Markdown
 
+# for LaunchBar Notification
+import subprocess as sp
+my_env = os.environ.copy()
+my_env["PATH"] = "/usr/local/bin:" + my_env["PATH"]
+#############################
+
+
 _CANNOT_CONVERT = 'cannot convert markdown'
 
 PYGMENTS_LOCAL = {
@@ -1048,7 +1055,7 @@ class MarkdownBuildCommand(sublime_plugin.WindowCommand):
             self.puts("Can't build an unsaved markdown file.")
             return
 
-        self.puts("Compiling %s..." % mdfile)
+        self.puts("Compiling %s ↓" % mdfile)
 
         if parser == "github":
             compiler = GithubCompiler()
@@ -1070,8 +1077,14 @@ class MarkdownBuildCommand(sublime_plugin.WindowCommand):
 
         if htmlfile is None:
             htmlfile = os.path.splitext(mdfile)[0] + '.html'
-        self.puts("        ->" + htmlfile)
+        self.puts("          "+ htmlfile)
         save_utf8(htmlfile, content)
+
+        # LaunchBar Notification
+        my_command = ["osascript", os.path.expanduser("~/Library/Application Support/Sublime Text 3/Packages/MarkdownPreview/notification.scpt"), htmlfile]
+        sp.check_output(my_command, env=my_env)
+        #############################
+
 
         elapsed = time.time() - start_time
         if body == _CANNOT_CONVERT:
