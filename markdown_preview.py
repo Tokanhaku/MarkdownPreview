@@ -23,10 +23,12 @@ from .markdown_wrapper import StMarkdown as Markdown
 
 # for LaunchBar Notification
 import subprocess as sp
+from urllib.parse import quote
 my_env = os.environ.copy()
 my_env["PATH"] = "/usr/local/bin:" + my_env["PATH"]
 
 def replaceuser(path):
+    path = quote(path)
     homepath = os.path.expanduser("~")
     if path[:len(homepath)] == homepath:
         path = "~"+path[len(homepath):]
