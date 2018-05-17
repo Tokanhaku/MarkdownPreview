@@ -24,6 +24,6 @@ def lb_notification(title, file_path):
     my_env = os.environ.copy()
     my_env["PATH"] = "/usr/local/bin:" + my_env["PATH"]
     tilda_path, full_path, encoded_url_path = process_path(file_path)    
-    my_command = ["osascript", "new_file_lb_notification.scpt", \
+    my_command = ["osascript", os.path.expanduser("~/Library/Application Support/Sublime Text 3/Packages/MarkdownPreview/new_file_lb_notification.scpt"), \
                     title, tilda_path, encoded_url_path]
     sp.check_output(my_command, env=my_env)
