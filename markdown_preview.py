@@ -21,21 +21,6 @@ from . import desktop
 from .markdown_settings import Settings
 from .markdown_wrapper import StMarkdown as Markdown
 
-# for LaunchBar Notification
-import subprocess as sp
-from urllib.parse import quote
-my_env = os.environ.copy()
-my_env["PATH"] = "/usr/local/bin:" + my_env["PATH"]
-
-def replaceuser(path):
-    path = quote(path)
-    homepath = os.path.expanduser("~")
-    if path[:len(homepath)] == homepath:
-        path = "~"+path[len(homepath):]
-    return path
-
-#############################
-
 
 _CANNOT_CONVERT = 'cannot convert markdown'
 
@@ -1090,11 +1075,8 @@ class MarkdownBuildCommand(sublime_plugin.WindowCommand):
         save_utf8(htmlfile, content)
 
         # LaunchBar Notification
-        # the AppleScript notification.scpt accept two strings: 
-        # 1. the message title,
-        # 2. the percent encoded file path with a "~"" instead of user home path.
-        my_command = ["osascript", os.path.expanduser("~/Library/Application Support/Sublime Text 3/Packages/MarkdownPreview/notification.scpt"), "🖋 New HTML File!", replaceuser(htmlfile)]
-        sp.check_output(my_command, env=my_env)
+        from .new_file import lb_notification
+        lb_notification("🖋 New HTML File!", htmlfile)
         #############################
 
 
