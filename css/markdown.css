@@ -1,6 +1,6 @@
 body {
   max-width: 980px;
-  border: 1px solid #ddd;
+  /*border: 1px solid #ddd;*/
   outline: 1300px solid #fff;
   margin: 16px auto;
 }
@@ -21,7 +21,7 @@ body .markdown-body
   -webkit-text-size-adjust: 100%;
   color: #333333;
   overflow: hidden;
-  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+  font-family: "Avenir Next", "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
   font-size: 16px;
   line-height: 1.6;
   word-wrap: break-word;
